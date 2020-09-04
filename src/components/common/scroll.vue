@@ -28,13 +28,21 @@ export default {
     this.scroll = new BScroll(this.$refs.wrapper, {
       click: true,
       probeType: this.probetype,
-      pullUpLoad: this.pullonload, //是否到底部加载
+      pullUpLoad: this.pullonload, //到底上拉加载
     }); 
+    //监听滚动位置，修改backtop状态
+    this.scroll.on('scroll',(position)=>{
+        this.$emit('emitbacktop',position)
+    })
+    //上拉加载
+    this.scroll.on('pullingUp',()=>{
+      this.$emit('pullonload')
+    })
   },
   methods: {
      refresh(){
     this.scroll && this.scroll.refresh()
-  }
+  },
   }
 };
 </script>

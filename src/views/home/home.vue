@@ -1,11 +1,14 @@
 <template>
   <div id="home">
-    <navbar />
-    <scroll class="content" ref="content" :probetype="3"
-       :pullonload="true" ><!-- @pullonload="pullonload"
+    <navbar/>
+    <div class="backtop" v-show="isshow"  @click="backtop">
+      <img src="@/assets/img/other/back-top.png" />
+    </div>
+    <scroll class="content" ref="content" :probetype="3" :pullonload="true"
+             @emitbacktop='isback'  @pullonload="pullonload">
+      <!-- @pullonload="pullonload"
       @scrollnum="scrollnum"-->
-      
-        <Carousel autoplay v-model="value2" loop>
+      <Carousel autoplay v-model="value2" loop>
         <CarouselItem v-for="(item,index) in banners" :key="index">
           <div class="demo-carousel">
             <a :href="item.link">
@@ -17,8 +20,7 @@
       <recommend :recommends="recommends"></recommend>
       <homecontrol @giclick="giclick" :controlitem="['流行','新款','精选']" class="homecontrolitem" />
       <br />
-      <goods-list :goods="goods[clickindex].list"/>
-      
+      <goods-list :goods="goods[clickindex].list" />
     </scroll>
   </div>
 </template>
@@ -34,6 +36,7 @@ import { getHomeMultiData, getHomeGoods } from "network/home.js";
 export default {
   data() {
     return {
+      isshow:false,
       value2: 0,
       banners: [],
       recommends: [],
@@ -50,9 +53,9 @@ export default {
     Recommend,
     Homecontrol,
     GoodsList,
-    Scroll,
+    Scroll, 
   },
- 
+
   created() {
     getHomeMultiData().then((res) => {
       this.banners = res.data.data.banner.list;
@@ -61,11 +64,10 @@ export default {
     this.getGoods("pop");
     this.getGoods("new");
     this.getGoods("sell");
-    
-    this.$bus.$on('imgloaded',()=>{
-       this.$refs.content.refresh()
-    })
-   
+
+    this.$bus.$on("imgloaded", () => {
+      this.$refs.content.refresh();
+    });
   },
   methods: {
     getGoods(type) {
@@ -73,7 +75,7 @@ export default {
       getHomeGoods(type, page).then((res) => {
         this.goods[type].list.push(...res.data.data.list);
         this.goods[type].page += 1;
-         this.$refs.content.scroll.finishPullUp();
+        this.$refs.content.scroll.finishPullUp();
       });
     },
     giclick(index) {
@@ -90,6 +92,16 @@ export default {
           break;
       }
     },
+    isback(position){
+      this.isshow=-position.y >1000 ;
+    },
+    backtop(){
+       this.$refs.content.scroll.scrollTo(0,0,300)
+    },
+    //上拉加载
+    pullonload(){
+       this.getGoods(this.clickindex);
+    }
   },
 };
 </script>
@@ -98,10 +110,21 @@ export default {
 #home {
   height: 100vh;
 }
+.backtop {
+  position: fixed;
+  bottom: 60px;
+  right: 10px;
+  z-index: 1;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.backtop img {
+  height: 35px;
+  width: 33px;
+}
 .content {
   position: relative;
   height: calc(100% - 92px);
-  overflow: hidden;
   top: 44px;
 }
 .swipeimg {
@@ -114,4 +137,6 @@ export default {
   position: sticky;
   top: 44px;
 }
+
+
 </style>
