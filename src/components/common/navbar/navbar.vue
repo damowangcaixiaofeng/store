@@ -1,7 +1,7 @@
 <template>
-  <div class="navbar">
+  <div class="navbar" :offset-top="50">
       <div class="navbarleft"><slot name="navbarleft"></slot></div>
-      <div class="navbarcenter"><slot name="navbarcenter"><strong>商品栏</strong></slot></div>
+      <div class="navbarcenter"><slot name="navbarcenter"><strong>商品</strong></slot></div>
       <div class="navbarright"><slot name="navbarright"></slot></div>
   </div>
 </template>
@@ -14,12 +14,16 @@ export default {
 
 <style scoped>
 .navbar{
+    width: 100%;
+    position: fixed;
+    background-color: #fff;
+    z-index: 2;
     display: flex;
     line-height: 44px;
     text-align: center;
-    box-shadow: 0 1px 0px rgba(24, 26, 26, 0.3);
+    box-shadow: 0 2px 3px rgba(197, 92, 92, 0.3);
 }
-.navbarleft,.navbarright{
+.navbarleft .navbarright{
     width: 60px;
     line-height: 44px;
 }
