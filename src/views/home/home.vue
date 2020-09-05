@@ -1,13 +1,26 @@
 <template>
   <div id="home">
-    <navbar/>
-    <div class="backtop" v-show="isshow"  @click="backtop">
-      <img src="@/assets/img/other/back-top.png" />
-    </div>
-    <scroll class="content" ref="content" :probetype="3" :pullonload="true"
-             @emitbacktop='isback'  @pullonload="pullonload">
-      <!-- @pullonload="pullonload"
-      @scrollnum="scrollnum"-->
+    <navbar>
+      <div slot="navbarcenter">
+        商品
+        <homecontrol
+          class="hc"
+          ref="homecontrol1"
+          v-show="homecontroshow"
+          :controlitem="['流行','新款','精选']"
+          @giclick="giclick"
+        />
+      </div>
+    </navbar>
+
+    <scroll
+      class="content"
+      ref="content"
+      :probetype="3"
+      :pullonload="true"
+      @emitbacktop="isback"
+      @pullonload="pullonload"
+    >
       <Carousel autoplay v-model="value2" loop>
         <CarouselItem v-for="(item,index) in banners" :key="index">
           <div class="demo-carousel">
@@ -18,10 +31,13 @@
         </CarouselItem>
       </Carousel>
       <recommend :recommends="recommends"></recommend>
-      <homecontrol @giclick="giclick" :controlitem="['流行','新款','精选']" class="homecontrolitem" />
+      <homecontrol ref="homecontrol" :controlitem="['流行','新款','精选']" @giclick="giclick" />
       <br />
       <goods-list :goods="goods[clickindex].list" />
     </scroll>
+    <div class="backtop" v-show="isshow" @click="backtop">
+      <img src="@/assets/img/other/back-top.png" />
+    </div>
   </div>
 </template>
 
@@ -36,11 +52,12 @@ import { getHomeMultiData, getHomeGoods } from "network/home.js";
 export default {
   data() {
     return {
-      isshow:false,
+      isshow: false,
       value2: 0,
       banners: [],
       recommends: [],
       clickindex: "pop",
+      homecontroshow: false,
       goods: {
         pop: { page: 0, list: [] },
         new: { page: 0, list: [] },
@@ -53,7 +70,7 @@ export default {
     Recommend,
     Homecontrol,
     GoodsList,
-    Scroll, 
+    Scroll,
   },
 
   created() {
@@ -64,12 +81,25 @@ export default {
     this.getGoods("pop");
     this.getGoods("new");
     this.getGoods("sell");
-
+  },
+  mounted() {
+    const ref = this.debounce(this.$refs.content.refresh, 1000);
     this.$bus.$on("imgloaded", () => {
       this.$refs.content.refresh();
+      ref();
     });
   },
   methods: {
+    //防抖
+    debounce(func, delay) {
+      let timer = null;
+      return function (...args) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(args);
+        }, delay);
+      };
+    },
     getGoods(type) {
       const page = this.goods[type].page + 1;
       getHomeGoods(type, page).then((res) => {
@@ -79,7 +109,6 @@ export default {
       });
     },
     giclick(index) {
-      /*  switch index  */
       switch (index) {
         case 0:
           this.clickindex = "pop";
@@ -91,25 +120,34 @@ export default {
           this.clickindex = "sell";
           break;
       }
+      this.$refs.homecontrol.fastindext = index;
+      this.$refs.homecontrol1.fastindext = index;
     },
-    isback(position){
-      this.isshow=-position.y >1000 ;
+    isback(position) {
+      //显示隐藏
+      this.isshow = -position.y > 1000;
+      this.homecontroshow =
+        -position.y > this.$refs.homecontrol.$el.offsetTop - 44;
     },
-    backtop(){
-       this.$refs.content.scroll.scrollTo(0,0,300)
+    backtop() {
+      this.$refs.content.scroll.scrollTo(0, 0, 300);
     },
     //上拉加载
-    pullonload(){
-       this.getGoods(this.clickindex);
-    }
+    pullonload() {
+      this.getGoods(this.clickindex);
+    },
   },
 };
 </script>
 
 <style scoped>
+.hc {
+  box-shadow: 0 -1px 3px rgba(197, 92, 92, 0.3);
+}
 #home {
   height: 100vh;
 }
+
 .backtop {
   position: fixed;
   bottom: 60px;
@@ -124,19 +162,12 @@ export default {
 }
 .content {
   position: relative;
-  height: calc(100% - 92px);
-  top: 44px;
+  height: calc(100% - 44px);
+  overflow: hidden;
 }
 .swipeimg {
   position: relative;
   height: 220px;
   width: 100%;
 }
-.homecontrolitem {
-  background-color: #fff;
-  position: sticky;
-  top: 44px;
-}
-
-
 </style>

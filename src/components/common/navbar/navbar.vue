@@ -1,7 +1,7 @@
 <template>
   <div class="navbar" :offset-top="50">
       <div class="navbarleft"><slot name="navbarleft"></slot></div>
-      <div class="navbarcenter"><slot name="navbarcenter"><strong>商品</strong></slot></div>
+      <div class="navbarcenter"><slot name="navbarcenter"></slot></div>
       <div class="navbarright"><slot name="navbarright"></slot></div>
   </div>
 </template>

@@ -28,6 +28,7 @@ export default {
         itemclick(index){
             this.fastindext=index;
             this.$emit('giclick', index)
+            
         }
     }
 }
