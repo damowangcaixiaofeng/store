@@ -23,7 +23,7 @@
     >
       <Carousel autoplay v-model="value2" loop>
         <CarouselItem v-for="(item,index) in banners" :key="index">
-          <div class="demo-carousel">
+          <div class="demo-cf">
             <a :href="item.link">
               <img class="swipeimg" :src="item.image" />
             </a>

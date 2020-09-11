@@ -1,7 +1,6 @@
 <template>
   <div class="listitem"  @click="itemClick">
-       <!-- // <img v-lazy="showImage" alt="" @load="imgload" > -->
-       <img :src="listitem.show.img" alt="" @load="imgload">
+       <img :src="showImage" alt="" @load="imgload" >
        <div class="listp">
            <P>{{listitem.title}}</P>
            <span>{{listitem.price}} </span>
@@ -27,11 +26,14 @@ export default {
       
         itemClick(){
             this.$router.push('/detail/'+this.listitem.iid)
-        
     }
     },computed: {
         showImage(){
-               return   this.listitem.image  || this.listitem.show.img 
+             if(this.listitem.show !== undefined){
+                  return  this.listitem.show.img
+             }else{
+                  return  this.listitem.image
+             }
         }
     }
     
