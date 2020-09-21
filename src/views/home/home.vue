@@ -18,7 +18,7 @@
       ref="content"
       :probetype="3"
       :pullonload="true"
-      @emitbacktop="isback"
+      @scrollnum="isback"
       @pullonload="pullonload"
     >
       <Carousel autoplay v-model="value2" loop>
@@ -128,6 +128,7 @@ export default {
       this.isshow = -position.y > 1000;
       this.homecontroshow =
         -position.y > this.$refs.homecontrol.$el.offsetTop - 44;
+        
     },
     backtop() {
       this.$refs.content.scroll.scrollTo(0, 0, 300);

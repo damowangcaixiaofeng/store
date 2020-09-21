@@ -69,11 +69,10 @@
     <detail-comment-info :commentInfo="commentInfo" class="detail-set-scroll" ref="pingjia" />
     <detail-goods-info :detailInfo="detailInfo"></detail-goods-info>
    
-    
-    <detail-bottom-bar></detail-bottom-bar>
     <goods-list :goods="recommendList" ref="scroll"></goods-list>
+     
 </scroll>
- 
+<detail-bottom-bar @addEvent='addEvent'></detail-bottom-bar>
     <div class="backtop" v-show="isshow" @click="backtop">
       <img src="@/assets/img/other/back-top.png" />
     </div>
