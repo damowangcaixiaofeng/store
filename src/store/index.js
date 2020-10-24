@@ -8,6 +8,7 @@ export default new Vuex.Store({
   getters,
   state: {
     carList:[],
+    storelist_item:null 
     
   },
   mutations: {
