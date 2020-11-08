@@ -298,7 +298,7 @@ export default {
   line-height: 30px;
   display: flex;
   font-size: 13px;
-  border-bottom: 1px solid rgba(100, 100, 100, 1);
+  border-bottom: 1px solid rgba(100, 100, 100, 0.1);
   justify-content: space-between;
 }
 

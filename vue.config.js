@@ -1,5 +1,6 @@
 //文件路径配置，导出和公共的配置合并
 module.exports={
+     
    configureWebpack:{
     resolve:{
         alias: {

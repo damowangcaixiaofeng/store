@@ -19,7 +19,7 @@ export default {
      isactive(){
       
           return  this.$route.path === this.path ? true : false;
-        //return  this.$route.path.indexOf(this.path) !== -1
+       
      },
      activestyle(){
          return this.isactive ? {color:this.activecolor}:{}

@@ -1,5 +1,5 @@
 import Toast from "components/common/Toast.vue"
-
+//创造插件
 const obj={
 }
 

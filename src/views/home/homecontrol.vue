@@ -1,3 +1,4 @@
+/* 精品，流行，新款的组件 */
 <template>
   <div class="homecontrol">
       <div v-for="(item,index) in controlitem" :key="index" class="controlitem">
@@ -39,6 +40,7 @@ export default {
     display: flex;
     padding-top: 10px;
     background-color: #ffffff;
+    border-top: 10px solid #eee;
 }
 .controlitem{
     flex: 1;

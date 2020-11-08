@@ -55,7 +55,7 @@ export default {
 
 <style>
 .carbar {
-  background-color: teal;
+  background-color: #b0b8b8;
   position: absolute;
   bottom: 49px;
   width: 100%;

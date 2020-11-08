@@ -13,7 +13,7 @@ export default {
      data () {
     return {
       scroll :null,
-      
+      Y:0
     }
   },props: {
     probetype:{
@@ -32,11 +32,12 @@ export default {
      pullUpLoad:this.pullonload//是否到底部加载
     });
    
-     this.scroll.scrollTo(0,0)
+    // this.scroll.scrollTo(0,0)
  //监听滚动的位置
      this.scroll.on('scroll',(position)=>{
+       this.Y=position.y;
      this.$emit("scrollnum", position)
-   
+      
   })
 //监听上拉
       if(this.pullonload){

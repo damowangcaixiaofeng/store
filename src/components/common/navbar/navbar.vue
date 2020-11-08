@@ -21,7 +21,7 @@ export default {
     display: flex;
     line-height: 44px;
     text-align: center;
-    box-shadow: 0 2px 3px rgba(197, 92, 92, 0.3);
+    box-shadow: 0 1px 1px rgba(133, 129, 129, 0.3);
 }
 .navbarleft .navbarright{
     width: 60px;

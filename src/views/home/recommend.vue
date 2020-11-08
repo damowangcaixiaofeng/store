@@ -1,3 +1,4 @@
+/* 推荐 */
 <template>
 <div>
   <div class="recommend">
@@ -32,7 +33,7 @@ export default {
     margin-top: 10px;
     display: flex;
     text-align: center;
-    border-bottom: 10px solid #eee;
+    
 }
 
 .recommenditem{

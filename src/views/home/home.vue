@@ -3,15 +3,15 @@
     <navbar>
       <div slot="navbarcenter">
         商品
-        <homecontrol
+      </div>
+    </navbar>
+    <homecontrol
           class="hc"
           ref="homecontrol1"
           v-show="homecontroshow"
           :controlitem="['流行','新款','精选']"
           @giclick="giclick"
         />
-      </div>
-    </navbar>
 
     <scroll
       class="content"
@@ -52,6 +52,7 @@ import { getHomeMultiData, getHomeGoods } from "network/home.js";
 export default {
   data() {
     return {
+      saveY:0,
       isshow: false,
       value2: 0,
       banners: [],
@@ -89,6 +90,16 @@ export default {
       ref();
     });
   },
+  deactivated () {
+    this.saveY=this.$refs.content.Y;
+  },
+  activated(){
+     
+    this.$refs.content.scroll.scrollTo(0,  this.saveY, 10);
+   
+     
+     
+  },
   methods: {
     //防抖
     debounce(func, delay) {
@@ -124,6 +135,7 @@ export default {
       this.$refs.homecontrol1.fastindext = index;
     },
     isback(position) {
+      //console.log(position);
       //显示隐藏
       this.isshow = -position.y > 1000;
       this.homecontroshow =
@@ -143,7 +155,13 @@ export default {
 
 <style scoped>
 .hc {
-  box-shadow: 0 -1px 3px rgba(197, 92, 92, 0.3);
+  box-shadow: 0 -1px 1px rgba(116, 112, 112, 0.3);
+  position: fixed;
+  top: 44px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding-bottom: 10px;
 }
 #home {
   height: 100vh;
