@@ -5,6 +5,7 @@
     </keep-alive>
     <tab-bar>
       <tab-bar-item path="/home">
+      
         <img slot="itemimg" src="@/assets/img/tabbar/shouye.png"/>
         <img slot="itemimga" src="@/assets/img/tabbar/shouye-a.png"/>
         <div slot="itemtext">首页</div>
